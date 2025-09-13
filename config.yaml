@@ -1,0 +1,12 @@
+# MLIDS configuration (YAML)
+# NOTE: The `log_file` config option was removed. Provide the main log filename
+# when creating the logger (e.g. get_logger('mlids', logfile='my_logs.json', logs_dir='logs'))
+# or via the CLI: python index.py start --log-file my_logs.json
+app_log_file: "C:\\inetpub\\logs\\LogFiles\\W3SVC1\\u_ex*.log"
+monitor_dir: .
+port_scan_threshold: 10
+brute_force_threshold: 5
+packet_rate_threshold: 100
+anomaly_window: 60
+sleep_idle: 0.1
+log_window: 1000

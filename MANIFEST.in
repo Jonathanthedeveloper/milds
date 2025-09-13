@@ -1,0 +1,11 @@
+include README.md
+include LICENSE
+include requirements.txt
+include config.yaml
+include index.py
+recursive-include docs *.md
+recursive-include tests *.py
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .pytest_cache
+global-exclude *.egg-info

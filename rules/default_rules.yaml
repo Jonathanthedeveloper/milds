@@ -1,0 +1,21 @@
+rules:
+  - name: SQL Injection (basic)
+    pattern: "(\%27)|(\')|(\-\-)|(\%23)|(#)|(\\bOR\\b\s+1=1)|(\\bAND\\b\s+1=1)"
+    category: app
+    severity: high
+    enabled: true
+  - name: XSS (basic)
+    pattern: "(<script>)|(alert\()|(<img src=javascript:)"
+    category: app
+    severity: high
+    enabled: true
+  - name: Path Traversal
+    pattern: "\.\./|\..\\"
+    category: app
+    severity: high
+    enabled: true
+  - name: Command Injection
+    pattern: "(;|&&|\|\|)\s*(cat|type|whoami|id|dir|ls)\\b"
+    category: app
+    severity: high
+    enabled: true

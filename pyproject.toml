@@ -1,0 +1,122 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlids"
+version = "1.0.0"
+description = "Multi-Level Intrusion Detection System"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "MLIDS Team", email = "maintainers@mlids.local"},
+]
+maintainers = [
+    {name = "MLIDS Team", email = "maintainers@mlids.local"},
+]
+keywords = [
+    "security",
+    "intrusion-detection",
+    "monitoring",
+    "network",
+    "host",
+    "application",
+    "cybersecurity",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Security",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Networking :: Monitoring",
+]
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+network = [
+    "scapy>=2.4.0",
+]
+analysis = [
+    "pandas>=1.3.0",
+    "numpy>=1.21.0",
+    "matplotlib>=3.4.0",
+]
+monitoring = [
+    "watchdog>=2.1.0",
+    "tailer>=0.4.0",
+]
+websockets = [
+    "websockets>=10.0",
+]
+mfa = [
+    "pyotp>=2.6.0",
+]
+visualization = [
+    "plotly>=5.0.0",
+    "seaborn>=0.11.0",
+]
+all = [
+    "scapy>=2.4.0",
+    "pandas>=1.3.0",
+    "numpy>=1.21.0",
+    "matplotlib>=3.4.0",
+    "watchdog>=2.1.0",
+    "tailer>=0.4.0",
+    "websockets>=10.0",
+    "pyotp>=2.6.0",
+    "pyyaml>=6.0",
+    "plotly>=5.0.0",
+    "seaborn>=0.11.0",
+]
+
+[project.scripts]
+mlids = "mlids.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/ORG_OWNER/mlids"
+Documentation = "https://github.com/ORG_OWNER/mlids/docs"
+Repository = "https://github.com/ORG_OWNER/mlids"
+Issues = "https://github.com/ORG_OWNER/mlids/issues"
+Changelog = "https://github.com/ORG_OWNER/mlids/CHANGELOG.md"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+mlids = ["*.yaml", "*.yml", "*.json", "*.txt"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = ["mlids"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
