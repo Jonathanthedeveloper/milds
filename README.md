@@ -6,7 +6,7 @@
 
 MLIDS is a comprehensive, lightweight intrusion detection system that monitors network traffic, host activities, and application logs for security threats. It provides real-time detection of port scans, brute force attacks, SQL injection, XSS, file integrity violations, and statistical anomalies.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic Installation
 
@@ -66,7 +66,7 @@ python index.py start --interface wlan0
 python index.py start --config config.yaml
 ```
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#-features)
 - [Architecture](#-architecture)
@@ -80,33 +80,33 @@ python index.py start --config config.yaml
 - [Contributing](#-contributing)
 - [License](#-license)
 
-## ✨ Features
+## Features
 
-### 🔍 Multi-Layer Detection
+### Multi-Layer Detection
 - **Network Layer**: Packet analysis, port scanning, DoS detection
 - **Host Layer**: File integrity monitoring, system event tracking
 - **Application Layer**: Log analysis, pattern matching, anomaly detection
 
-### 📊 Advanced Analytics
+### Advanced Analytics
 - Real-time statistical analysis using MAD (Median Absolute Deviation)
 - Machine learning-based anomaly detection
 - Comprehensive reporting and visualization
 - Custom threat hunting queries
 
-### 🔗 Flexible Integration
+### Flexible Integration
 - TCP/WebSocket event sinks for real-time streaming
 - SIEM integration (Splunk, ELK Stack)
 - RESTful API for programmatic access
 - Custom alerting and notification systems
 
-### 🛠️ Enterprise Ready
+### Enterprise Ready
 - Configurable detection thresholds
 - Log rotation and retention policies
 - Cross-platform compatibility (Windows, Linux, macOS)
 - Docker container support
 - High-performance architecture
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -162,7 +162,7 @@ python index.py start --config config.yaml
 - Common workflows
 - Best practices for initial setup
 
-### [🔍 Monitoring Guide](docs/monitoring.md)
+### [Monitoring Guide](docs/monitoring.md)
 - Network monitoring capabilities
 - Host monitoring features
 - Application log monitoring
@@ -183,7 +183,7 @@ python index.py start --config config.yaml
 - TCP/WebSocket protocols
 - Python API for integration
 
-### [💡 Examples & Use Cases](docs/examples.md)
+### [Examples & Use Cases](docs/examples.md)
 - Real-world deployment scenarios
 - Custom detection rules
 - Integration examples
