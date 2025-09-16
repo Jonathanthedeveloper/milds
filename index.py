@@ -226,11 +226,57 @@ def main():
                 outdir = CONFIG.get('logs_dir', '.')
                 os.makedirs(outdir, exist_ok=True)
                 outpath = args.plot_path or os.path.join(outdir, 'summary.png')
-                plt.savefig(outpath)
-                print(f"Summary plot written to {outpath}")
+                # Ensure the parent directory for the requested outpath exists. This
+                # prevents errors when a user passes an absolute path that doesn't
+                # exist (for example a Unix-style path on Windows).
+                try:
+                    parent = os.path.dirname(outpath)
+                    if parent:
+                        os.makedirs(parent, exist_ok=True)
+                except Exception:
+                    # If we cannot create the requested parent directory, fall back
+                    # to the configured logs directory.
+                    outpath = os.path.join(outdir, 'summary.png')
+
+                # Attempt to save the figure; if it fails (permission/invalid path),
+                # fall back to writing inside the logs directory so the command
+                # remains useful on Windows and other platforms.
+                try:
+                    plt.savefig(outpath)
+                    print(f"Summary plot written to {outpath}")
+                except (FileNotFoundError, OSError) as e:
+                    fallback = os.path.join(outdir, 'summary.png')
+                    try:
+                        plt.savefig(fallback)
+                        print(f"Requested path not available ({e}). Wrote summary plot to {fallback}")
+                    except Exception as e2:
+                        print(f"Failed to write summary plot: {e2}")
                     
-            # Anomaly: High event rate
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+                # Anomaly: High event rate
+            # Parse timestamps using the known log format first to avoid pandas
+            # falling back to dateutil with a warning. Our logs use a format like
+            # '2025-09-16 03:46:03,992' (comma before milliseconds). We'll try
+            # that format, and for any values that fail parsing we'll fall back
+            # to pandas' generic parser.
+            fmt = '%Y-%m-%d %H:%M:%S,%f'
+            def safe_parse_series(series):
+                # Preserve NaN/nulls
+                parsed = pd.to_datetime(series.dropna(), format=fmt, errors='coerce')
+                # For entries that couldn't be parsed with the explicit format,
+                # fall back to pandas' flexible parser.
+                needs = parsed[parsed.isna()].index
+                if not needs.empty:
+                    fallback = pd.to_datetime(series.loc[needs], errors='coerce')
+                    parsed.loc[needs] = fallback
+                # Reindex to original index, preserving NaT for nulls
+                return parsed.reindex(series.index)
+
+            # If timestamp column exists, parse it safely; otherwise create an
+            # empty datetime column to avoid downstream errors.
+            if 'timestamp' in df.columns:
+                df['timestamp'] = safe_parse_series(df['timestamp'])
+            else:
+                df['timestamp'] = pd.to_datetime(pd.Series([pd.NaT] * len(df)))
             recent = df[df['timestamp'] > df['timestamp'].max() - pd.Timedelta(seconds=CONFIG['anomaly_window'])]
             counts = recent.groupby('type').size()
             if not counts.empty:
